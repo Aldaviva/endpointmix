@@ -1,0 +1,32 @@
+.font-size(@size){
+	font-size: 1/16em * @size;
+}
+
+#fonts() {
+	.count() {
+		font-family: "Knockout 48";
+	}
+
+	.key() {
+		font-family: "Knockout 27"
+	}
+
+	.explanation() {
+		font-family: "Verlag Black";
+	}
+}
+
+@font-face {
+	font-family: "Knockout 48";
+	src: url('/fonts/Knockout-48-alt.woff') format('woff');
+}
+
+@font-face {
+	font-family: "Knockout 27";
+	src: url('/fonts/Knockout-27.woff') format('woff');
+}
+
+@font-face {
+	font-family: "Verlag Black";
+	src: url('/fonts/Verlag-Black.woff') format('woff');
+}
