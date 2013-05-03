@@ -1,0 +1,37 @@
+.info {
+	@vertical_offset : @box_margin - 1px;
+	bottom           : -2px;
+	font-size        : 1.4871 * @box_size;
+	margin-left      : -1 * @count_width;
+	position         : absolute;
+
+	.count {
+		padding-bottom: 0px;
+	}
+
+	.count span, .key {
+		display        : inline-block;
+		height         : @box_size;
+		line-height    : @box_size;
+		padding-bottom : @vertical_offset;
+	}
+
+	.count {
+		#fonts > .count();
+
+		span {
+			border-bottom: 4px solid rgba(255, 255, 255, 0.5);
+		}
+
+		display      : inline-block;
+		margin-right : 27px;
+		text-align   : right;
+		width        : @count_width;
+	}
+
+	.key {
+		#fonts > .key();
+		opacity        : 0.60;
+		text-transform : uppercase;
+	}
+}

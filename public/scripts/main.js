@@ -12,7 +12,16 @@
 
 	function poll(){
 		$.get("/api/endpointmix", function(res){
-			renderPage(res.data.participants);
+			var participants = res.data.participants;
+			participants.Other = 
+				(participants.Jabber || 0) +
+				(participants.Flash  || 0) +
+				(participants.Lync   || 0);
+			delete participants.Jabber;
+			delete participants.Lync;
+			delete participants.Flash;
+
+			renderPage(participants);
 		});
 	}
 
@@ -43,10 +52,8 @@
 			if(sortedIndex !== oldSortedIndex){
 				if(sortedIndex === 0){
 					$('.containers').prepend(container);
-					//move to be the first child of containers
 				} else {
 					$('.containers .container').eq(sortedIndex - 1).after(container);
-					//move to be the next sibling of item with index sortedIndex - 1
 				}
 			}
 
