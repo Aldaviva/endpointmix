@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'sinatra/base'
 require 'rest_client'
 require 'base64'
