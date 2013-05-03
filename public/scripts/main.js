@@ -27,6 +27,29 @@
 
 			container.data('count', count);
 
+			var oldSortedIndex = $('.containers .container').index(container);
+			currentMix[key] = count;
+			var sortedIndex = _(currentMix)
+				.map(function(v, k){
+					return { "key": k, "value": v };
+				})
+				.sortBy(function(item){
+					return -1 * item.value;
+				})
+				.findIndex(function(item){
+					return item.key == key;
+				});
+
+			if(sortedIndex !== oldSortedIndex){
+				if(sortedIndex === 0){
+					$('.containers').prepend(container);
+					//move to be the first child of containers
+				} else {
+					$('.containers .container').eq(sortedIndex - 1).after(container);
+					//move to be the next sibling of item with index sortedIndex - 1
+				}
+			}
+
 			renderContainer(container, key, count);
 		});
 

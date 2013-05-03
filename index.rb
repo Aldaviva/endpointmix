@@ -30,7 +30,7 @@ class EndpointMixApi < Sinatra::Base
 	end
 
 	def renewSessionCookie
-		configSource = File.read("config.json")#read config.json from disk into string
+		configSource = File.read("config.json")
 		config = JSON.parse(configSource)
 		username = config['username']
 		password = config['password']

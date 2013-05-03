@@ -1,4 +1,4 @@
 all: run
 
 run:
-	@RACK_ENV=development rackup
+	@RACK_ENV=production rackup
