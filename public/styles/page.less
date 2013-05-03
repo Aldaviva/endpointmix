@@ -26,6 +26,10 @@ body {
 	&.h323   { .box_color(@color_h323);   }
 	&.acid   { .box_color(@color_acid);   }
 	&.pstn   { .box_color(@color_pstn);   }
+
+	&[data-count='0'] {
+		display: none;
+	}
 }
 
 .explanation {

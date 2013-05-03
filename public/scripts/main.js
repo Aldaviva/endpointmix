@@ -60,12 +60,6 @@
 			renderContainer(container, key, count);
 		});
 
-		var keysToRemove = _.difference(_.keys(currentMix), _.keys(counts));
-		_.each(keysToRemove, function(keyToRemove){
-			console.log("removing "+keyToRemove+", which no one is using");
-			$('.container.'+keyToRemove.toLowerCase()).remove();
-		});
-
 		currentMix = counts;
 	}
 
