@@ -1,37 +1,42 @@
+@font_size            : 1.4871 * @box_size;
+
 .info {
-	@vertical_offset      : @box_margin - 1px;
+	@vertical_offset      : @box_margin + (@box_size / 50px * 7px);
 	bottom                : -2px;
-	font-size             : 1.4871 * @box_size;
+	font-size             : @font_size;
 	margin-left           : -1 * @count_width;
 	position              : absolute;
 
-	.count {
-		padding-bottom    : 0px;
+	.count, .key {
+		vertical-align: bottom;
 	}
 
 	.count span, .key {
 		display           : inline-block;
 		height            : @box_size;
-		line-height       : @box_size;
+		/*line-height       : @box_size;*/
+		line-height: @font_size;
 		padding-bottom    : @vertical_offset;
 	}
 
 	.count {
 		#fonts > .count();
-
-		span {
-			border-bottom : 4px solid rgba(255, 255, 255, 0.5);
-		}
-
+		padding-bottom    : @vertical_offset + 4px;
+		height            : @box_size;
 		display           : inline-block;
 		margin-right      : 27px;
 		text-align        : right;
 		width             : @count_width;
+
+		span {
+			border-bottom : 4px solid rgba(255, 255, 255, 0.5);
+		}
 	}
 
 	.key {
 		#fonts > .key();
 		opacity           : 0.60;
 		text-transform    : uppercase;
+		padding-bottom: @vertical_offset + 4px;
 	}
 }

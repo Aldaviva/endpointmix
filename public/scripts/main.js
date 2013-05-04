@@ -15,11 +15,13 @@
 			var participants = res.data.participants;
 			participants.Other = 
 				(participants.Jabber       || 0) +
+				(participants.Google       || 0) +
 				(participants.TelePresence || 0) +
 				(participants.Flash        || 0) +
 				(participants.Lync         || 0);
 			delete participants.Jabber;
 			delete participants.Lync;
+			delete participants.Google;
 			delete participants.TelePresence;
 			delete participants.Flash;
 
