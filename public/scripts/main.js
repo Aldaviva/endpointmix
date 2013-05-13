@@ -13,17 +13,27 @@
 	function poll(){
 		$.get("/api/endpointmix", function(res){
 			var participants = res.data.participants;
+			delete participants.Flash;
+
+			_.defaults(participants, {
+				Skinny: 0,
+				Skype: 0,
+				Acid: 0,
+				H323: 0,
+				PSTN: 0
+			});
+
 			participants.Other = 
 				(participants.Jabber       || 0) +
 				(participants.Google       || 0) +
-				(participants.TelePresence || 0) +
-				(participants.Flash        || 0) +
+				(participants.Telepresence || 0) +
+				(participants.SIP          || 0) +
 				(participants.Lync         || 0);
 			delete participants.Jabber;
 			delete participants.Lync;
 			delete participants.Google;
-			delete participants.TelePresence;
-			delete participants.Flash;
+			delete participants.SIP;
+			delete participants.Telepresence;
 
 			renderPage(participants);
 		});
@@ -38,7 +48,7 @@
 				$('.containers').append(container);
 			}
 
-			container.data('count', count);
+			container.attr('data-count', count);
 
 			var oldSortedIndex = $('.containers .container').index(container);
 			currentMix[key] = count;
@@ -87,7 +97,7 @@
 		var boxes = boxesContainer.children();
 		var countDifference = count - boxes.size();
 
-		var animationDuration = isFirstRender ? 0 : 1000;
+		var animationDuration = isFirstRender ? 0 : 2000;
 
 		if(countDifference > 0){
 			var i = countDifference;
@@ -110,6 +120,7 @@
 				duration: animationDuration,
 				complete: function(){
 					$(this).remove();
+					//sometimes this doesn't fire in mac chrome, and the box stays there with 0 opacity
 				}
 			})
 		}

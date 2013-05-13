@@ -35,8 +35,9 @@ body {
 .explanation {
 	#fonts > .explanation();
 	.font-size(17pt);
-	margin-left                 : @left_column_width + @box_margin;
+	margin-left                 : auto;
 	margin-top                  : @box_margin;
 	opacity                     : 0.35;
 	text-transform              : uppercase;
+	width                       : (@box_columns * (@box_size + @box_margin)) - @box_margin;
 }

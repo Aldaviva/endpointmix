@@ -1,4 +1,4 @@
-@font_size            : 1.4871 * @box_size;
+@font_size                : 1.4871 * @box_size;
 
 .info {
 	@vertical_offset      : @box_margin + (@box_size / 50px * 7px);
@@ -8,14 +8,14 @@
 	position              : absolute;
 
 	.count, .key {
-		vertical-align: bottom;
+		vertical-align    : bottom;
 	}
 
 	.count span, .key {
 		display           : inline-block;
 		height            : @box_size;
-		/*line-height       : @box_size;*/
-		line-height: @font_size;
+		/*line-height     : @box_size;*/
+		line-height       : @font_size;
 		padding-bottom    : @vertical_offset;
 	}
 
@@ -37,6 +37,6 @@
 		#fonts > .key();
 		opacity           : 0.60;
 		text-transform    : uppercase;
-		padding-bottom: @vertical_offset + 4px;
+		padding-bottom    : @vertical_offset + 4px;
 	}
 }
