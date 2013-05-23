@@ -30,10 +30,10 @@
 				(participants.SIP          || 0) +
 				(participants.Lync         || 0);
 			delete participants.Jabber;
-			delete participants.Lync;
 			delete participants.Google;
-			delete participants.SIP;
 			delete participants.Telepresence;
+			delete participants.SIP;
+			delete participants.Lync;
 
 			renderPage(participants);
 		});
@@ -49,6 +49,7 @@
 			}
 
 			container.attr('data-count', count);
+			container.attr('data-count-max', Math.max(count, parseInt(container.attr('data-count-max') || "0", 10)));
 
 			var oldSortedIndex = $('.containers .container').index(container);
 			currentMix[key] = count;
