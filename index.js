@@ -1,3 +1,4 @@
+var graphite    = require('graphite');
 var http        = require('http');
 var querystring = require('querystring');
 var restify     = require('restify');
@@ -10,6 +11,8 @@ if(!require('fs').existsSync('./config.json')){
 process.on('uncaughtException', function(e){
 	console.error(e);
 });
+
+var graphiteClient = graphite.createClient("plaintext://127.0.0.1:2003/");
 
 var indigoSessionId = 'none';
 
@@ -60,6 +63,7 @@ function getEndpointMix(onComplete){
 			} else {
 				var body = JSON.parse(rawBody);
 				onComplete(body);
+				sendParticipantsToGraphite(body.data.participants);
 			}
 		});
 	});
@@ -100,4 +104,12 @@ function renewIndigoSession(onRenew){
 	}));
 
 	req.end();
+}
+
+function sendParticipantsToGraphite(participants){
+	graphiteClient.write({ endpointmix: participants }, function(err){
+		if(err != null){
+			console.warn("failed to write metrics to graphite", err);
+		}
+	});
 }
