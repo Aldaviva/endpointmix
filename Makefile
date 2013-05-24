@@ -1,10 +1,19 @@
-all: run
+JSL := jsl
+LESSC := node_modules/less/bin/lessc
+NODE := node
+NPM := npm
 
-dev:
-	@RACK_ENV=development rackup
+all: lint css
 
-run:
-	@RACK_ENV=production rackup
+.PHONY: lint
+lint:
+	@$(JSL) --conf=tools/jsl.conf --nofilelisting --nologo --nosummary *.js
+
+css:
+	@$(LESSC) public/styles/all.less public/styles/all.css
+
+run: 
+	@$(NODE) .
 
 deps:
-	@bundle install
+	@$(NPM) install
