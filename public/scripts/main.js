@@ -123,7 +123,7 @@
 					$(this).remove();
 					//sometimes this doesn't fire in mac chrome, and the box stays there with 0 opacity
 				}
-			})
+			});
 		}
 
 		$('.info .count span', container)
