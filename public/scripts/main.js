@@ -28,12 +28,16 @@
 				(participants.Google       || 0) +
 				(participants.Telepresence || 0) +
 				(participants.SIP          || 0) +
-				(participants.Lync         || 0);
+				(participants.Lync         || 0) +
+				(participants.InterCall    || 0) +
+				(participants.Movie        || 0);
 			delete participants.Jabber;
 			delete participants.Google;
 			delete participants.Telepresence;
 			delete participants.SIP;
 			delete participants.Lync;
+			delete participants.InterCall;
+			delete participants.Movie;
 
 			renderPage(participants);
 		});
@@ -121,7 +125,6 @@
 				duration: animationDuration,
 				complete: function(){
 					$(this).remove();
-					//sometimes this doesn't fire in mac chrome, and the box stays there with 0 opacity
 				}
 			});
 		}
