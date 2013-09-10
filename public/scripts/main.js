@@ -24,19 +24,21 @@
 			});
 
 			participants.Other = 
-				(participants.Jabber       || 0) +
-				(participants.Google       || 0) +
-				(participants.Telepresence || 0) +
-				(participants.SIP          || 0) +
-				(participants.Lync         || 0) +
-				(participants.InterCall    || 0) +
-				(participants.Movie        || 0);
+				(participants.Jabber                || 0) +
+				(participants.Google                || 0) +
+				(participants.Telepresence          || 0) +
+				(participants.SIP                   || 0) +
+				(participants.Lync                  || 0) +
+				(participants.InterCall             || 0) +
+				(participants.InterCallMediaCascade || 0) +
+				(participants.Movie                 || 0);
 			delete participants.Jabber;
 			delete participants.Google;
 			delete participants.Telepresence;
 			delete participants.SIP;
 			delete participants.Lync;
 			delete participants.InterCall;
+			delete participants.InterCallMediaCascade;
 			delete participants.Movie;
 
 			renderPage(participants);
