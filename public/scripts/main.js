@@ -5,6 +5,10 @@
 		"PSTN": "Phone"
 	};
 
+	var PRIMARY_ENDPOINTS = ['Skinny', 'H323', 'PSTN', 'Acid', 'Skype'];
+	var IGNORED_ENDPOINTS = ['Flash', 'Movie'];
+	var OTHER_ENDPOINTS   = ['Jabber', 'Google', 'Telepresence', 'SIP', 'Lync', 'InterCall', 'InterCallMediaCascade'];
+
 	var currentMix = {};
 
 	setInterval(poll, 15*1000);
@@ -13,33 +17,18 @@
 	function poll(){
 		$.get("/api/endpointmix", function(res){
 			var participants = res.data.participants;
-			delete participants.Flash;
 
-			_.defaults(participants, {
-				Skinny: 0,
-				Skype: 0,
-				Acid: 0,
-				H323: 0,
-				PSTN: 0
-			});
+			//ignore endpoints like the Flash IVR
+			participants = _.omit(participants, IGNORED_ENDPOINTS);
 
-			participants.Other = 
-				(participants.Jabber                || 0) +
-				(participants.Google                || 0) +
-				(participants.Telepresence          || 0) +
-				(participants.SIP                   || 0) +
-				(participants.Lync                  || 0) +
-				(participants.InterCall             || 0) +
-				(participants.InterCallMediaCascade || 0) +
-				(participants.Movie                 || 0);
-			delete participants.Jabber;
-			delete participants.Google;
-			delete participants.Telepresence;
-			delete participants.SIP;
-			delete participants.Lync;
-			delete participants.InterCall;
-			delete participants.InterCallMediaCascade;
-			delete participants.Movie;
+			//important endpoints like Skinny always appear, even if no one is using them
+			_.defaults(participants, _.zipObject(PRIMARY_ENDPOINTS, array_fill_zero(PRIMARY_ENDPOINTS.length)));
+
+			//combine unimportant endpoints like Jabber into the Other category
+			participants.Other = _(participants)
+				.pick(OTHER_ENDPOINTS)
+				.reduce(function(prev, curr){ return prev + curr; }, 0);
+			participants = _.omit(participants, OTHER_ENDPOINTS);
 
 			renderPage(participants);
 		});
@@ -54,8 +43,7 @@
 				$('.containers').append(container);
 			}
 
-			container.attr('data-count', count);
-			container.attr('data-count-max', Math.max(count, parseInt(container.attr('data-count-max') || "0", 10)));
+			
 
 			var oldSortedIndex = $('.containers .container').index(container);
 			currentMix[key] = count;
@@ -86,6 +74,8 @@
 
 	function renderContainer(container, key, count){
 		var isFirstRender = container.is(':empty');
+		var label = LABELS[key] || key;
+
 		if(isFirstRender){
 			$("<div>", { "class": "boxesContainer" })
 				.appendTo(container);
@@ -94,10 +84,17 @@
 				.append($("<span>", { "class": "count" }).append($("<span>")))
 				.append($("<span>", {
 					"class": "key",
-					"text": LABELS[key] || key
+					"text": label
 				}))
 				.appendTo(container);
 		}
+
+		var max = Math.max(count, parseInt(container.attr('data-count-max') || "0", 10));
+		container.attr({
+			'data-count'     : count,
+			'data-count-max' : max,
+			'title'          : label + ' maximum since page load:\n'+max+' concurrent connections'
+		});
 
 		var boxesContainer = $('.boxesContainer', container);
 
@@ -133,6 +130,10 @@
 
 		$('.info .count span', container)
 			.text(count);
+	}
+
+	function array_fill_zero(length){
+		return Array.apply(null, Array(length)).map(Number.prototype.valueOf, 0);
 	}
 
 })();
