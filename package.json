@@ -1,7 +1,7 @@
 {
 	"name"    : "endpointmix",
 	"author"  : "Ben Hutchison <ben@aldaviva.com>",
-	"version" : "1.0.1",
+	"version" : "1.0.2-SNAPSHOT",
 	"dependencies": {
 		"restify"  : "2.5.1",
 		"graphite" : "0.0.6"

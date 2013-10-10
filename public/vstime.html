@@ -16,12 +16,16 @@
 	</head>
 
 	<body>
-		<img src="http://10.4.4.251:8083/render/?_salt=1369361195.744&width=1080&height=1920&yMin=0&hideGrid=true&yAxisSide=right&from=18%3A45_20130523&colorList=%23ff6666%2C%236cff00%2C%23dd80ff%2C%23ffaa00%2C%2300c8ff&target=endpointmix.Acid&target=endpointmix.H323&target=endpointmix.PSTN&target=endpointmix.Skinny&target=endpointmix.Skype&lineWidth=4&bgcolor=333333&fgcolor=FFFFFF&drawNullAsZero=true" />
+		<img id="graph" />
 
 		<script type='text/javascript'>
-			window.setTimeout(function(){
-				window.location.reload();
-			}, 15*1000);
+		    var imgSrcTemplate = "http://10.4.4.251:8083/render/?width=1080&height=1920&yMin=0&hideGrid=true&yAxisSide=right&colorList=%23ffaa00%2C%236cff00%2C%23dd80ff%2C%2300c8ff%2C%23ff6666&target=alias(endpointmix.Skinny%2C%22Skinny%22)&target=alias(endpointmix.H323%2C%22H.323%22)&target=alias(endpointmix.PSTN%2C%22Phone%22)&target=alias(endpointmix.Skype%2C%22Skype%22)&target=alias(endpointmix.Acid%2C%22Acid%22)&lineWidth=4&bgcolor=333333&fgcolor=FFFFFF&drawNullAsZero=true&tz=America%2FLos_Angeles&fontSize=14&xFormat=%25I%3A%25M%20%25p&_salt={salt}";
+			var graphImage = document.getElementById('graph');
+			var updateGraph = function(){
+				graphImage.src = imgSrcTemplate.replace('{salt}', +new Date());
+			};
+			window.setInterval(updateGraph, 15*1000);
+			updateGraph();
 		</script>
 	</body>
 </html>
