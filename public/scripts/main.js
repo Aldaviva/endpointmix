@@ -6,8 +6,8 @@
 	};
 
 	var PRIMARY_ENDPOINTS = ['Skinny', 'H323', 'PSTN', 'Acid', 'Skype'];
-	var IGNORED_ENDPOINTS = ['Flash', 'Movie'];
-	var OTHER_ENDPOINTS   = ['Jabber', 'Google', 'Telepresence', 'SIP', 'Lync', 'InterCall', 'InterCallMediaCascade'];
+	var IGNORED_ENDPOINTS = ['Flash', 'Movie', 'Record', 'InterCallMediaCascade'];
+	var OTHER_ENDPOINTS   = ['Jabber', 'Google', 'Telepresence', 'SIP', 'Lync', 'InterCall'];
 
 	var currentMix = {};
 
