@@ -3,3 +3,4 @@ config.json
 *.sublime-workspace
 node_modules
 public/styles/all.css
+skinny-world-record

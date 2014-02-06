@@ -18,6 +18,8 @@ var indigoSessionId = 'none';
 
 var config = require('./config.json');
 
+var worldRecords = require('./worldrecords');
+
 var server = restify.createServer();
 
 server.get("api/endpointmix", function(req, res){
@@ -33,7 +35,7 @@ server.get(/\/.*/, restify.serveStatic({
   maxAge: 3600
 }));
 
-server.listen(config.listenPort, function(){
+server.listen(config.www.listenPort, function(){
 	console.log("Listening on %s", server.url);
 });
 
@@ -63,7 +65,7 @@ function getEndpointMix(onComplete){
 			} else {
 				var body = JSON.parse(rawBody);
 				onComplete(body);
-				sendParticipantsToGraphite(body.data.participants);
+				onEndpointMixUpdate(body.data.participants);
 			}
 		});
 	});
@@ -99,8 +101,8 @@ function renewIndigoSession(onRenew){
 	});
 
 	req.write(querystring.stringify({
-		j_username: config.username,
-		j_password: config.password
+		j_username: config.indigo.username,
+		j_password: config.indigo.password
 	}));
 
 	req.end();
@@ -112,4 +114,12 @@ function sendParticipantsToGraphite(participants){
 			console.warn("failed to write metrics to graphite", err);
 		}
 	});
+}
+
+function onEndpointMixUpdate(participants){
+	sendParticipantsToGraphite(participants);
+	
+	if(participants.Skinny){
+		worldRecords.submitSkinnyRecord(participants.Skinny);
+	}
 }

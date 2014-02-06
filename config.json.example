@@ -1,5 +1,15 @@
 {
-	"username": "",
-	"password": "",
-	"listenPort": 8080
+	"indigo": {
+		"username": "",
+		"password": "",
+	},
+	"www":{
+		"listenPort": 8080
+	},
+	"smtp": {
+		"host": "",
+		"username": "",
+		"password": "",
+		"recipients": []
+	}
 }

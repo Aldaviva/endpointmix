@@ -3,8 +3,9 @@
 	"author"  : "Ben Hutchison <ben@aldaviva.com>",
 	"version" : "1.0.2-SNAPSHOT",
 	"dependencies": {
-		"restify"  : "2.5.1",
-		"graphite" : "0.0.6"
+		"graphite"   : "0.0.6",
+		"nodemailer" : "0.6.0",
+		"restify"    : "2.5.1"
 	},
 	"devDependencies": {
 		"less"         : "1.2.1"

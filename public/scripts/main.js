@@ -5,7 +5,7 @@
 		"PSTN": "Phone"
 	};
 
-	var PRIMARY_ENDPOINTS = ['Skinny', 'H323', 'PSTN', 'Acid', 'Skype'];
+	var PRIMARY_ENDPOINTS = ['Skinny', 'H323', 'PSTN', 'Acid', 'Skype', 'Base'];
 	var IGNORED_ENDPOINTS = ['Flash', 'Movie', 'Record', 'InterCallMediaCascade'];
 	var OTHER_ENDPOINTS   = ['Jabber', 'Google', 'Telepresence', 'SIP', 'Lync', 'InterCall'];
 
@@ -42,8 +42,6 @@
 				container = $('<div>', { 'class': 'container '+key.toLowerCase() });
 				$('.containers').append(container);
 			}
-
-			
 
 			var oldSortedIndex = $('.containers .container').index(container);
 			currentMix[key] = count;
