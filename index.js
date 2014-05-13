@@ -3,6 +3,8 @@ var http        = require('http');
 var querystring = require('querystring');
 var restify     = require('restify');
 
+process.chdir(__dirname);
+
 if(!require('fs').existsSync('./config.json')){
 	console.error('Missing config.json. See config.json.example.');
 	process.exit(1);
@@ -65,7 +67,7 @@ function getEndpointMix(onComplete){
 			} else {
 				var body = JSON.parse(rawBody);
 				onComplete(body);
-				onEndpointMixUpdate(body.data.participants);
+				onEndpointMixUpdate(body.data.endpointsBreakup);
 			}
 		});
 	});

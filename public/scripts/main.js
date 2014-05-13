@@ -5,8 +5,8 @@
 		"PSTN": "Phone"
 	};
 
-	var PRIMARY_ENDPOINTS = ['Skinny', 'H323', 'PSTN', 'Acid', 'Skype', 'Base'];
-	var IGNORED_ENDPOINTS = ['Flash', 'Movie', 'Record', 'InterCallMediaCascade'];
+	var PRIMARY_ENDPOINTS = ['Skinny', 'H323', 'PSTN', 'Acid', 'Base'];
+	var IGNORED_ENDPOINTS = ['Flash', 'Movie', 'Record', 'InterCallMediaCascade', 'Master', 'Slave'];
 	var OTHER_ENDPOINTS   = ['Jabber', 'Google', 'Telepresence', 'SIP', 'Lync', 'InterCall'];
 
 	var currentMix = {};
@@ -16,7 +16,7 @@
 
 	function poll(){
 		$.get("/api/endpointmix", function(res){
-			var participants = res.data.participants;
+			var participants = res.data.endpointsBreakup;
 
 			//ignore endpoints like the Flash IVR
 			participants = _.omit(participants, IGNORED_ENDPOINTS);
