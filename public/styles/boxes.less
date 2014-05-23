@@ -1,16 +1,21 @@
 .boxesContainer {
-	margin-left          : auto;
-	width                : (@box_columns * (@box_size + @box_margin));
+	margin-left : auto;
+	width       : 67%;
 
 	.box {
 		background-color : @color_other;
 		border-bottom    : @box_border_size solid darken(@color_other, 10%);
-		border-radius    : 4px;
+		border-radius    : 0.11em;
 		border-top       : 1px solid lighten(@color_other, 10%);
+		box-sizing       : border-box;
 		display          : inline-block;
-		height           : @box_size - @box_border_size - 1px;
-		margin           : 0 0 @box_margin @box_margin;
+		height           : 1em;
+		margin           : 0 0 0.5em 0.5em;
 		vertical-align   : bottom;
-		width            : @box_size;
+		width            : 1em;
+
+		&:first-child {
+			margin-top: 0.5em;
+		}
 	}
 }

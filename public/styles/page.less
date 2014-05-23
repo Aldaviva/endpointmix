@@ -5,13 +5,10 @@ body {
 }
 
 .container {
-	border-bottom               : 2px solid rgba(255, 255, 255, 0.25);
-	margin-left                 : 50px;
-	position                    : relative;
-
-	+ .container {
-		padding-top             : @box_size/2;
-	}
+	border-bottom : 2px solid rgba(255, 255, 255, 0.25);
+	margin-left   : 50px;
+	position      : relative;
+	min-height    : 53px;
 
 	&[data-count='0'] {
 		display                 : none;
@@ -26,7 +23,6 @@ body {
 	}
 
 	&.skinny { .box_color(@color_skinny); }
-	&.skype  { .box_color(@color_skype);  }
 	&.h323   { .box_color(@color_h323);   }
 	&.acid   { .box_color(@color_acid);   }
 	&.pstn   { .box_color(@color_pstn);   }
@@ -36,9 +32,9 @@ body {
 .explanation {
 	#fonts > .explanation();
 	.font-size(17pt);
-	margin-left                 : auto;
-	margin-top                  : @box_margin;
-	opacity                     : 0.35;
-	text-transform              : uppercase;
-	width                       : (@box_columns * (@box_size + @box_margin)) - @box_margin;
+	/*margin-left    : 78px;*/
+	text-align: right;
+	margin-top     : 17px;
+	opacity        : 0.35;
+	text-transform : uppercase;
 }

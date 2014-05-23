@@ -10,6 +10,8 @@
 	var OTHER_ENDPOINTS   = ['Jabber', 'Google', 'Telepresence', 'SIP', 'Lync', 'InterCall'];
 
 	var currentMix = {};
+	var containersEl = $('.containers');
+	var boxSizeAdjuster = new BoxSizeAdjuster();
 
 	setInterval(poll, 15*1000);
 	poll();
@@ -31,6 +33,13 @@
 			participants = _.omit(participants, OTHER_ENDPOINTS);
 
 			renderPage(participants);
+			// renderPage(_.extend(participants, {
+			// 	Skinny: 1375,
+			// 	Acid: 41,
+			// 	Base: 10,
+			// 	H323: 375,
+			// 	PSTN: 500
+			// }));
 		});
 	}
 
@@ -66,6 +75,8 @@
 
 			renderContainer(container, key, count);
 		});
+
+		boxSizeAdjuster.adjustBoxSize();
 
 		currentMix = counts;
 	}
@@ -126,12 +137,60 @@
 			});
 		}
 
-		$('.info .count span', container)
-			.text(count);
+		$('.info .count span', container).text(count);
 	}
 
 	function array_fill_zero(length){
 		return Array.apply(null, Array(length)).map(Number.prototype.valueOf, 0);
 	}
+
+	function BoxSizeAdjuster(){}
+
+	BoxSizeAdjuster.prototype.adjustBoxSize = function() {
+		this.step(this.getNextStepSize(35), 0);
+		while(this.getExtraHeight() < 0){
+			console.log("extra height "+this.getExtraHeight()+", reducing size by 1");
+			containersEl.css('font-size', _.parseInt(containersEl.css('font-size')) - 1);
+		}
+	};
+
+	BoxSizeAdjuster.prototype.getExtraHeight = function() {
+		return document.documentElement.clientHeight - document.documentElement.scrollHeight;
+	};
+
+	BoxSizeAdjuster.prototype.getNextStepSize = function(prevStepSize){
+		var extraHeight = this.getExtraHeight();
+		var nextStepSize;
+		if(extraHeight < 0){
+			nextStepSize = -1 * Math.abs(prevStepSize / 2);
+		} else if(extraHeight > 17){
+			nextStepSize = Math.abs(prevStepSize / 2);
+		} else {
+			nextStepSize = null; //no further adjustments
+		}
+
+		if(nextStepSize === null || Math.abs(nextStepSize) < 1){
+			return null;
+		} else {
+			return nextStepSize;
+		}
+	};
+
+	BoxSizeAdjuster.prototype.step = function(stepSize, iterations){
+		var oldSize = _.parseInt(containersEl.css('font-size'));
+		var newSize = oldSize + stepSize;
+
+		if(iterations < 100 && newSize > 12 && newSize < 300){
+			containersEl.css('font-size', newSize);
+			console.log('box_size = '+newSize+'px');
+
+			var nextStepSize = this.getNextStepSize(stepSize);
+			if(nextStepSize === null){
+				console.log("done");
+			} else {
+				this.step(nextStepSize, iterations+1);
+			}
+		}
+	};
 
 })();

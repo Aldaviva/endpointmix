@@ -1,7 +1,7 @@
-@font_size                : 1.4871 * @box_size;
+@font_size                : 52px;
 
 .info {
-	@vertical_offset      : @box_margin + (@box_size / 50px * 7px);
+	@vertical_offset      : 22px;
 	bottom                : -2px;
 	font-size             : @font_size;
 	margin-left           : -1 * @count_width;
@@ -13,16 +13,14 @@
 
 	.count span, .key {
 		display           : inline-block;
-		height            : @box_size;
-		/*line-height     : @box_size;*/
-		/*line-height     : @font_size;*/
+		height            : 35px;
 		padding-bottom    : @vertical_offset;
 	}
 
 	.count {
 		#fonts > .count();
 		padding-bottom    : @vertical_offset + 4px;
-		height            : @box_size;
+		height            : 35px;
 		display           : inline-block;
 		margin-right      : 27px;
 		text-align        : right;
