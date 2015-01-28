@@ -6,8 +6,8 @@
 	};
 
 	var PRIMARY_ENDPOINTS = ['Skinny', 'H323', 'PSTN', 'Acid', 'Base'];
-	var IGNORED_ENDPOINTS = ['Flash', 'Movie', 'Record', 'InterCallMediaCascade', 'Master', 'Slave'];
-	var OTHER_ENDPOINTS   = ['Jabber', 'Google', 'Telepresence', 'SIP', 'Lync', 'InterCall'];
+	var IGNORED_ENDPOINTS = ['Flash', 'Movie', 'Record', 'InterCallMediaCascade', 'Master', 'Slave', 'Stream'];
+	var OTHER_ENDPOINTS   = ['Jabber', 'Google', 'Telepresence', 'SIP', 'Lync', 'InterCall', 'ISDN', 'Hangouts'];
 
 	var currentMix = {};
 	var containersEl = $('.containers');
