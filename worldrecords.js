@@ -12,7 +12,7 @@ var smtpTransport = nodemailer.createTransport("SMTP", {
 });
 
 module.exports.submitSkinnyRecord = function(participantCount){
-	if(participantCount > skinnyWorldRecord){
+	if(isRecordValid(participantCount)){
 		console.info("a new skinny world record: "+participantCount);
 		skinnyWorldRecord = participantCount;
 		notifyRecordBroken(participantCount);
@@ -45,4 +45,9 @@ function saveRecord(participantCount){
 	fs.writeFile(recordFile, String(participantCount), function(err){
 		if(err) console.error("could not write world record file", err);
 	});
+}
+
+function isRecordValid(participantCount){
+	return (participantCount > skinnyWorldRecord)
+		&& (new Date().getDay() <= 5); //ignore Sundays, when load tests may occur
 }
