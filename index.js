@@ -24,11 +24,11 @@ var worldRecords = require('./worldrecords');
 
 var server = restify.createServer();
 
+var mostRecentEndpointMix = {};
+
 server.get("api/endpointmix", function(req, res){
 	res.header('Cache-Control', 'no-cache');
-	getEndpointMix(function(body){
-		res.send(body);
-	});
+	res.send(mostRecentEndpointMix);
 });
 
 server.get(/\/.*/, restify.serveStatic({
@@ -40,6 +40,16 @@ server.get(/\/.*/, restify.serveStatic({
 server.listen(config.www.listenPort, function(){
 	console.log("Listening on %s", server.url);
 });
+
+setInterval(cacheEndpointMix, 15*1000);
+cacheEndpointMix();
+
+function cacheEndpointMix(){
+	getEndpointMix(function(mix){
+		mostRecentEndpointMix = mix
+		console.info(JSON.stringify(mix.data.endpointsBreakup));
+	});
+}
 
 function getEndpointMix(onComplete){
 	var req = http.request({
@@ -66,7 +76,7 @@ function getEndpointMix(onComplete){
 				});
 			} else {
 				var body = JSON.parse(rawBody);
-				onComplete(body);
+				onComplete && onComplete(body);
 				onEndpointMixUpdate(body.data.endpointsBreakup);
 			}
 		});
