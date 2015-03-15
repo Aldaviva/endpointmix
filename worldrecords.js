@@ -49,5 +49,5 @@ function saveRecord(participantCount){
 
 function isRecordValid(participantCount){
 	return (participantCount > skinnyWorldRecord)
-		&& (new Date().getDay() <= 5); //ignore Sundays, when load tests may occur
+		&& (new Date().getDay() > 0); //ignore Sundays, when load tests may occur
 }
