@@ -2,12 +2,15 @@
 
 	var LABELS = {
 		"H323": "H.323",
-		"PSTN": "Phone"
+		"PSTN": "Phone",
+		"BlueJeansApp": "Carmel",
+		"RoomSystem": "Room System",
+		"Skinny": "Skinny"
 	};
 
-	var PRIMARY_ENDPOINTS = ['Skinny', 'H323', 'PSTN', 'Acid', 'Base'];
-	var IGNORED_ENDPOINTS = ['Flash', 'Movie', 'Record', 'InterCallMediaCascade', 'Master', 'Slave', 'Stream'];
-	var OTHER_ENDPOINTS   = ['Jabber', 'Google', 'Telepresence', 'SIP', 'Lync', 'InterCall', 'ISDN', 'Hangouts'];
+	var PRIMARY_ENDPOINTS = ['Skinny', 'RoomSystem', 'PSTN', 'Acid', 'Base'];
+	var IGNORED_ENDPOINTS = ['Flash', 'Movie', 'Record', 'InterCallMediaCascade', 'Master', 'Slave', 'Stream', 'PartnerCascade', 'unknown'];
+	var OTHER_ENDPOINTS   = ['Jabber', 'Google', 'Telepresence', 'Lync', 'InterCall', 'ISDN', 'Hangouts', 'Level3'];
 
 	var currentMix = {};
 	var containersEl = $('.containers');
@@ -31,6 +34,22 @@
 				.pick(OTHER_ENDPOINTS)
 				.reduce(function(prev, curr){ return prev + curr; }, 0);
 			participants = _.omit(participants, OTHER_ENDPOINTS);
+
+			participants.RoomSystem = _(participants)
+				.pick(["H323", "SIP"])
+				.reduce(function(prev, curr){ return prev + curr; }, 0);
+			participants = _.omit(participants, ["H323", "SIP"]);
+
+			participants.Carmel = participants.BlueJeansApp || 0;
+			delete participants.BlueJeansApp;
+
+			
+/*			participants.Skinny += participants.WebRTC || 0;
+			delete participants.WebRTC;
+
+			participants.Skinny += participants.BlueJeansApp || 0;
+			delete participants.BlueJeansApp;
+*/
 
 			renderPage(participants);
 			// renderPage(_.extend(participants, {

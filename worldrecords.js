@@ -43,7 +43,9 @@ function notifyRecordBroken(participantCount){
 
 function saveRecord(participantCount){
 	fs.writeFile(recordFile, String(participantCount), function(err){
-		if(err) console.error("could not write world record file", err);
+		if(err) {
+			console.error("could not write world record file", err);
+		}
 	});
 }
 

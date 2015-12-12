@@ -3,6 +3,8 @@ var http        = require('http');
 var querystring = require('querystring');
 var restify     = require('restify');
 
+var INDIGO_IP = "10.100.0.28";
+
 process.chdir(__dirname);
 
 if(!require('fs').existsSync('./config.json')){
@@ -46,14 +48,14 @@ cacheEndpointMix();
 
 function cacheEndpointMix(){
 	getEndpointMix(function(mix){
-		mostRecentEndpointMix = mix
+		mostRecentEndpointMix = mix;
 		console.info(JSON.stringify(mix.data.endpointsBreakup));
 	});
 }
 
 function getEndpointMix(onComplete){
 	var req = http.request({
-		host: '10.100.0.19',
+		host: INDIGO_IP,
 		port: 8080,
 		path: '/indigo-webapp/indigo/meetings/live-meeting-summary.json?gf=%7B%22entityFilter%22%3A%22NONE%22%2C%22meetingFilter%22%3A3%2C%22entity%22%3Anull%2C%22entityDisplayName%22%3A%22%22%2C%22billableFilter%22%3Afalse%7D',
 		method: 'GET',
@@ -86,7 +88,7 @@ function getEndpointMix(onComplete){
 
 function renewIndigoSession(onRenew){
 	var req = http.request({
-		host: '10.100.0.19',
+		host: INDIGO_IP,
 		port: 8080,
 		path: '/indigo-webapp/j_spring_security_check',
 		method: 'POST',
